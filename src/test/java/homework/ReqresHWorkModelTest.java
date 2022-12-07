@@ -89,5 +89,16 @@ public class ReqresHWorkModelTest extends BaseTest {
                 .then()
                 .spec(deleteResponseSpec);
     }
+    @Test
+    @DisplayName("Проверка списка пользователей ")
+    void listUsersSuccessTest() {
+        ListUsersResponse response = given()
+                .spec(usersRequestSpec)
+                .when()
+                .get()
+                .then()
+                .spec(listUsersResponseSpec)
+                .extract().as(ListUsersResponse.class);
+    }
 }
 

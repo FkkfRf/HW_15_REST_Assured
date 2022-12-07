@@ -45,5 +45,9 @@ public class ResponseSpecs {
             .expectStatusCode(204)
             .build();
 
-
+    public static ResponseSpecification listUsersResponseSpec = new ResponseSpecBuilder()
+            .log(STATUS)
+            .log(BODY)
+            .expectStatusCode(200)
+            .build();
 }
