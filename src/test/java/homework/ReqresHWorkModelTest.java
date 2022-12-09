@@ -119,6 +119,8 @@ public class ReqresHWorkModelTest extends BaseTest {
                 .spec(listUsersResponseSpec)
                 .extract().as(ListUsersResponse.class);
         assertThat(response.getPage()).isEqualTo(1);
+        assertThat(response.getData().get(0).getLast_name()).isEqualTo("Bluth");
+        assertThat(response.getSupport().getText()).isEqualTo("To keep ReqRes free, contributions towards server costs are appreciated!");
     }
 }
 
