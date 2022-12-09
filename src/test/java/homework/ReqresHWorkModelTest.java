@@ -9,6 +9,7 @@ import static homework.specs.RequestSpecs.usersRequestSpec;
 import static homework.specs.ResponseSpecs.*;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 
 public class ReqresHWorkModelTest extends BaseTest {
     @Test
@@ -89,9 +90,27 @@ public class ReqresHWorkModelTest extends BaseTest {
                 .then()
                 .spec(deleteResponseSpec);
     }
+
     @Test
     @DisplayName("Проверка списка пользователей ")
     void listUsersSuccessTest() {
+        given()
+                .spec(usersRequestSpec)
+                .when()
+                .get()
+                .then()
+                .spec(listUsersResponseSpec)
+                .body("data.findAll{it.email =~/.*?@reqres.in/}.email.flatten()",
+                        hasItem("eve.holt@reqres.in"))
+                .body("data.first_name.flatten()",
+                        hasItem("Janet"))
+                .body("data.findAll{it.avatar =~/.*?.jpg/}.avatar.flatten()",
+                        hasItem("https://reqres.in/img/faces/3-image.jpg"));
+    }
+
+    @Test
+    @DisplayName("Проверка списка пользователей 2")
+    void listUsersSuccessTest2() {
         ListUsersResponse response = given()
                 .spec(usersRequestSpec)
                 .when()
@@ -99,6 +118,9 @@ public class ReqresHWorkModelTest extends BaseTest {
                 .then()
                 .spec(listUsersResponseSpec)
                 .extract().as(ListUsersResponse.class);
+        assertThat(response.getPage()).isEqualTo(1);
     }
 }
+
+
 

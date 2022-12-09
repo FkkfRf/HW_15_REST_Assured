@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ListUsersResponse {
+   private String page, per_page, total, total_pages;
     @JsonProperty("data")
     private ListUsersData data;
     @JsonProperty("support")
